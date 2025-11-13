@@ -1,0 +1,18 @@
+h1, h2, h3, h4 {
+  font-family: 'Poppins', sans-serif;
+}
+
+.card {
+  border: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+img {
+  max-height: 320px;
+  object-fit: cover;
+}

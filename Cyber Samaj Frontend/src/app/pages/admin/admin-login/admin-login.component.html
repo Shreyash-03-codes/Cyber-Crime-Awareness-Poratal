@@ -1,0 +1,104 @@
+<div class="admin-login-container">
+  <div class="login-card">
+    <!-- Header -->
+    <div class="login-header">
+      <div class="logo">
+        <h1>CyberSamajh</h1>
+        <span>Admin Portal</span>
+      </div>
+      <p class="subtitle">Secure Access to Administrative Controls</p>
+    </div>
+
+    <!-- Login Form -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="error-message">
+        <i class="icon-warning"></i>
+        {{ errorMessage }}
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <div class="input-container">
+          <i class="icon-email"></i>
+          <input
+            type="email"
+            id="username"
+            formControlName="username"
+            [class.error]="email?.invalid && email?.touched"
+          >
+        </div>
+        <div *ngIf="email?.invalid && email?.touched" class="validation-error">
+          <span *ngIf="email?.errors?.['required']">Email is required</span>
+          <span *ngIf="email?.errors?.['email']">Please enter a valid email</span>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-container">
+          <i class="icon-password"></i>
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            formControlName="password"
+            placeholder="Enter your password"
+            [class.error]="password?.invalid && password?.touched"
+          >
+          <button
+            type="button"
+            class="toggle-password"
+            (click)="togglePasswordVisibility()"
+          >
+            <i [class]="showPassword ? 'icon-visibility-off' : 'icon-visibility'"></i>
+          </button>
+        </div>
+        <div *ngIf="password?.invalid && password?.touched" class="validation-error">
+          <span *ngIf="password?.errors?.['required']">Password is required</span>
+          <span *ngIf="password?.errors?.['minlength']">
+            Password must be at least 6 characters
+          </span>
+        </div>
+      </div>
+
+      <!-- Remember Me & Forgot Password -->
+      <div class="form-options">
+        <label class="remember-me">
+          <input type="checkbox" formControlName="rememberMe">
+          <span class="checkmark"></span>
+          Remember me
+        </label>
+        <a href="#" class="forgot-password">Forgot Password?</a>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="login-btn">
+        Sign In
+      </button>
+
+      <!-- Security Notice -->
+      <div class="security-notice">
+        <i class="icon-security"></i>
+        <p>Ensure you're on a secure connection before entering credentials</p>
+      </div>
+    </form>
+
+    <!-- Footer -->
+    <div class="login-footer">
+      <p>&copy; 2024 CyberSamajh. All rights reserved.</p>
+      <p class="version">v1.0.0</p>
+    </div>
+  </div>
+
+  <!-- Background Elements -->
+  <div class="background-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+</div>

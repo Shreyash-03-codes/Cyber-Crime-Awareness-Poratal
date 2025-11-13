@@ -1,0 +1,123 @@
+<!-- src/app/components/all-report/all-report.component.html -->
+<div class="reports-container">
+  <div class="header">
+    <h2>My Complaints & Reports</h2>
+    <button 
+      class="refresh-btn" 
+      (click)="refreshComplaints()" 
+      [disabled]="loading">
+      {{ loading ? 'Refreshing...' : 'Refresh' }}
+    </button>
+  </div>
+
+  <!-- Status Filter -->
+  <div class="filter-section">
+    <div class="filter-buttons">
+      <button 
+        class="filter-btn" 
+        [class.active]="statusFilter === 'ALL'"
+        (click)="filterByStatus('ALL')">
+        All ({{ complaints.length }})
+      </button>
+      <button 
+        class="filter-btn status-pending" 
+        [class.active]="statusFilter === 'PENDING'"
+        (click)="filterByStatus('PENDING')">
+        Pending ({{ pendingCount }})
+      </button>
+      <button 
+        class="filter-btn status-in-progress" 
+        [class.active]="statusFilter === 'IN_PROGRESS'"
+        (click)="filterByStatus('IN_PROGRESS')">
+        In Progress ({{ inProgressCount }})
+      </button>
+      <button 
+        class="filter-btn status-resolved" 
+        [class.active]="statusFilter === 'RESOLVED'"
+        (click)="filterByStatus('RESOLVED')">
+        Resolved ({{ resolvedCount }})
+      </button>
+      <button 
+        class="filter-btn status-closed" 
+        [class.active]="statusFilter === 'CLOSED'"
+        (click)="filterByStatus('CLOSED')">
+        Closed ({{ closedCount }})
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading your complaints...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-state">
+    <div class="error-icon">⚠️</div>
+    <p>{{ error }}</p>
+    <button class="retry-btn" (click)="loadComplaints()">Try Again</button>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && !error && filteredComplaints.length === 0" class="empty-state">
+    <div class="empty-icon">📝</div>
+    <h3>No Complaints Found</h3>
+    <p *ngIf="statusFilter !== 'ALL'">
+      No complaints with status "{{ getStatusText(statusFilter) }}" found.
+    </p>
+    <p *ngIf="statusFilter === 'ALL'">
+      You haven't submitted any complaints yet.
+    </p>
+  </div>
+
+  <!-- Complaints List -->
+  <div *ngIf="!loading && filteredComplaints.length > 0" class="complaints-list">
+    <div class="complaint-card" *ngFor="let complaint of filteredComplaints">
+      <div class="complaint-header">
+        <h3 class="complaint-type">{{ complaint.complaintType }}</h3>
+        <span 
+          class="status-badge" 
+          [ngClass]="getStatusClass(complaint.status)">
+          {{ getStatusText(complaint.status) }}
+        </span>
+      </div>
+
+      <div class="complaint-body">
+        <p class="description">{{ complaint.description }}</p>
+        
+        <!-- Image Preview -->
+        <div *ngIf="complaint.image" class="image-section">
+          <p class="image-label">Attached Image:</p>
+          <div class="image-preview" (click)="viewImage(complaint.image)">
+            <img 
+              [src]="'data:image/jpeg;base64,' + complaint.image" 
+              alt="Complaint evidence" 
+              class="complaint-image"
+              (error)="onImageError($event)"
+              #complaintImage>
+            <div class="image-overlay">
+              <span class="view-text">Click to view full image</span>
+            </div>
+          </div>
+          <div *ngIf="!testImage(complaint.image)" class="image-error">
+            ⚠️ Image format may be invalid
+          </div>
+        </div>
+
+        <div *ngIf="!complaint.image" class="no-image">
+          No image attached
+        </div>
+      </div>
+
+      <div class="complaint-footer">
+        <span class="complaint-id" *ngIf="complaint.complaintId">
+          ID: {{ complaint.complaintId }}
+        </span>
+        <span class="created-date" *ngIf="complaint.createdAt">
+          Submitted: {{ complaint.createdAt }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

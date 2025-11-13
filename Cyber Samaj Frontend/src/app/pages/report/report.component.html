@@ -1,0 +1,150 @@
+<div class="report-container">
+  <div class="report-header">
+    <h1>Report Cyber Crime</h1>
+    <p>Help us make the internet safer by reporting cyber crimes and security incidents</p>
+  </div>
+
+  <!-- Success Message -->
+  <div *ngIf="submissionSuccess" class="alert alert-success">
+    <div class="alert-content">
+      <i class="success-icon">✓</i>
+      <div>
+        <h3>Success!</h3>
+        <p>Your report has been submitted successfully. Our team will review it and take appropriate action.</p>
+        <small>Redirecting to home page in 3 seconds...</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="submissionError" class="alert alert-error">
+    <div class="alert-content">
+      <i class="error-icon">⚠</i>
+      <div>
+        <h3>Error</h3>
+        <p>{{ submissionError }}</p>
+      </div>
+    </div>
+  </div>
+
+  <form [formGroup]="reportForm" (ngSubmit)="onSubmit()" class="report-form">
+    <!-- Complaint Type -->
+    <div class="form-group">
+      <label for="complaintType" class="form-label">
+        Type of Cyber Crime *
+      </label>
+      <select
+        id="complaintType"
+        formControlName="complaintType"
+        class="form-select"
+        [class.error]="complaintType?.invalid && complaintType?.touched"
+      >
+        <option value="">Select a crime type</option>
+        <option *ngFor="let type of complaintTypes" [value]="type.value">
+          {{ type.label }}
+        </option>
+      </select>
+      <div *ngIf="complaintType?.invalid && complaintType?.touched" class="error-message">
+        <span *ngIf="complaintType?.errors?.['required']">Please select a crime type</span>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label for="description" class="form-label">
+        Incident Description *
+      </label>
+      <textarea
+        id="description"
+        formControlName="description"
+        rows="6"
+        placeholder="Please provide detailed information about the incident, including:
+• When did it happen?
+• What exactly occurred?
+• Any suspicious links, emails, or messages involved?
+• What steps have you taken so far?"
+        class="form-textarea"
+        [class.error]="description?.invalid && description?.touched"
+      ></textarea>
+      <div class="character-count">
+        {{ description?.value?.length || 0 }}/1000 characters
+      </div>
+      <div *ngIf="description?.invalid && description?.touched" class="error-message">
+        <span *ngIf="description?.errors?.['required']">Please provide a description of the incident</span>
+        <span *ngIf="description?.errors?.['minlength']">Description must be at least 10 characters long</span>
+        <span *ngIf="description?.errors?.['maxlength']">Description cannot exceed 1000 characters</span>
+      </div>
+    </div>
+
+    <!-- Image Upload -->
+    <div class="form-group">
+      <label class="form-label">
+        Upload Evidence (Optional)
+      </label>
+      <div class="file-upload-container">
+        <div *ngIf="!imagePreview" class="file-upload-area" (click)="fileInput.click()">
+          <i class="upload-icon">📁</i>
+          <p>Click to upload evidence image</p>
+          <span class="file-hint">Supports JPG, PNG, GIF • Max 5MB</span>
+          <input
+            #fileInput
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event)"
+            class="file-input"
+            hidden
+          />
+        </div>
+        
+        <div *ngIf="imagePreview" class="image-preview">
+          <img [src]="imagePreview" alt="Preview" class="preview-image">
+          <button type="button" (click)="removeImage()" class="remove-image-btn">
+            ×
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="submit-btn"
+        [disabled]="isSubmitting || reportForm.invalid"
+      >
+        <span *ngIf="!isSubmitting">Submit Report</span>
+        <span *ngIf="isSubmitting" class="loading">
+          <span class="spinner"></span>
+          Submitting...
+        </span>
+      </button>
+    </div>
+  </form>
+
+  <!-- Important Information -->
+  <div class="info-section">
+    <h3>Important Information</h3>
+    <div class="info-grid">
+      <div class="info-card">
+        <i class="info-icon">🔒</i>
+        <h4>Your Privacy</h4>
+        <p>All reports are treated with strict confidentiality. Your personal information is protected.</p>
+      </div>
+      <div class="info-card">
+        <i class="info-icon">⚡</i>
+        <h4>Quick Response</h4>
+        <p>Our team reviews reports within 24 hours and takes immediate action when necessary.</p>
+      </div>
+      <div class="info-card">
+        <i class="info-icon">🛡️</i>
+        <h4>Legal Protection</h4>
+        <p>Reporting helps us track patterns and work with law enforcement to prevent future crimes.</p>
+      </div>
+      <div class="info-card">
+  <i class="info-icon">📞</i>
+  <h4>24/7 Support</h4>
+  <p>Our support team is available round the clock to assist you with any cyber security concerns.</p>
+</div>
+    </div>
+  </div>
+</div>

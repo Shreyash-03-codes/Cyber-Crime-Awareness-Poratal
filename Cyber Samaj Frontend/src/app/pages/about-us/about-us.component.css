@@ -1,0 +1,22 @@
+.about-us-section {
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+.about-us-section h2 {
+  font-size: 2rem;
+}
+
+.about-us-section img {
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.about-us-section img:hover {
+  transform: scale(1.03);
+}
+
+.about-us-section ul li {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}

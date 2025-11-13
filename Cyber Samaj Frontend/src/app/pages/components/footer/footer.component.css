@@ -1,0 +1,17 @@
+.small-footer {
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.small-footer p {
+  margin-bottom: 0.4rem;
+}
+
+.small-footer h6 {
+  font-size: 1rem;
+}
+
+.small-footer a:hover {
+  text-decoration: underline;
+  color: #0d6efd; /* Subtle hover effect */
+}

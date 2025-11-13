@@ -1,0 +1,88 @@
+<div class="news-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <h1>Cyber Security News</h1>
+    <p>Stay updated with the latest cybersecurity threats, breaches, and protection strategies</p>
+  </div>
+
+  <!-- Controls Section -->
+  <div class="controls-section">
+    <div class="search-box">
+      <input
+        type="text"
+        placeholder="Search cybersecurity news..."
+        (input)="onSearchChange($any($event.target).value)"
+        class="search-input"
+      />
+      <button class="refresh-btn" (click)="refreshNews()" [disabled]="loading">
+        {{ loading ? 'Loading...' : 'Refresh' }}
+      </button>
+    </div>
+
+    <div class="category-filters">
+      <button
+        *ngFor="let category of categories"
+        [class.active]="selectedCategory === category"
+        (click)="onCategoryChange(category)"
+        class="category-btn"
+      >
+        {{ category === 'all' ? 'All News' : category }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-section">
+    <div class="spinner"></div>
+    <p>Loading latest cybersecurity news...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-section">
+    <div class="error-message">
+      <h3>Unable to load news</h3>
+      <p>{{ error }}</p>
+      <button (click)="refreshNews()" class="retry-btn">Try Again</button>
+    </div>
+  </div>
+
+  <!-- News Grid -->
+  <div *ngIf="!loading && !error" class="news-grid-section">
+    <h2>Latest Updates ({{ filteredArticles.length }})</h2>
+    
+    <div *ngIf="filteredArticles.length === 0" class="no-results">
+      <h3>No articles found</h3>
+      <p>Try adjusting your search terms or category filter</p>
+    </div>
+
+    <div class="news-grid">
+      <div
+        *ngFor="let article of filteredArticles"
+        class="news-card"
+        (click)="openArticle(article.url)"
+      >
+        <div class="card-image">
+          <img [src]="article.image" [alt]="article.title" />
+          <span class="category-badge">{{ article.category }}</span>
+        </div>
+        
+        <div class="card-content">
+          <h3 class="article-title">{{ article.title }}</h3>
+          <p class="article-description">{{ article.description }}</p>
+          
+          <div class="article-meta">
+            <div class="meta-left">
+              <span class="source">{{ article.source }}</span>
+              <span class="author" *ngIf="article.author">By {{ article.author }}</span>
+            </div>
+            <span class="date">{{ article.publishedAt }}</span>
+          </div>
+        </div>
+        
+        <div class="card-footer">
+          <span class="read-more">Read Full Article →</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

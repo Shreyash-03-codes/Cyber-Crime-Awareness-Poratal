@@ -1,0 +1,63 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">CyberSamajh</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <!-- Links if NOT logged in -->
+        <ng-container *ngIf="!isLoggedIn">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/about-us">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/contact-us">Contact Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/signup">Signup</a>
+          </li>
+        </ng-container>
+
+        <!-- Links if logged in -->
+        <ng-container *ngIf="isLoggedIn">
+          <li class="nav-item" *ngIf="adminLoggedIn!=='admin@cybersamajh'">
+            <a class="nav-link" routerLink="/news">News</a>
+          </li>
+          <li class="nav-item" *ngIf="adminLoggedIn!=='admin@cybersamajh'">
+            <a class="nav-link" routerLink="/articles">Articles</a>
+          </li>
+          <li class="nav-item" *ngIf="adminLoggedIn!=='admin@cybersamajh'">
+            <a class="nav-link" routerLink="/laws">Laws</a>
+          </li>
+          <li class="nav-item" *ngIf="adminLoggedIn!=='admin@cybersamajh'">
+            <a class="nav-link" routerLink="/report">Report a Crime</a>
+          </li>
+          <li class="nav-item" *ngIf="adminLoggedIn!=='admin@cybersamajh'">
+            <a class="nav-link" routerLink="/all-reports">All Reports Dashboard</a>
+          </li>
+          <li class="nav-item" *ngIf="adminLoggedIn==='admin@cybersamajh'">
+            <a class="nav-link" routerLink="admin/admin-dashboard">All Reports Dashboard</a>
+          </li>
+        </ng-container>
+      </ul>
+
+      <!-- Show username and logout button if logged in -->
+      <ul class="navbar-nav ms-auto" *ngIf="isLoggedIn">
+        <li class="nav-item">
+          <span class="navbar-text me-3">Hello, {{ username }}</span>
+        </li>
+        <li class="nav-item">
+          <button class="btn btn-outline-light btn-sm" (click)="logout()">Logout</button>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</nav>

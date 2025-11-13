@@ -1,0 +1,90 @@
+<div class="articles-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <h1>Cybersecurity Articles</h1>
+    <p>Stay informed with the latest security practices and threat intelligence</p>
+  </div>
+
+  <!-- Search and Filter Section -->
+  <div class="filter-section">
+    <div class="search-box">
+      <input 
+        type="text" 
+        placeholder="Search articles..." 
+        (input)="onSearchChange($any($event.target).value)"
+        class="search-input">
+    </div>
+
+      <div class="category-filters">
+      <button 
+        *ngFor="let category of getCategories()"
+        [class.active]="selectedCategory === category"
+        (click)="filterByCategory(category)"
+        class="category-btn">
+        {{ category === 'all' ? 'All Categories' : category }}
+      </button>
+    </div>
+  </div>
+
+     <h2>All Articles ({{ filteredArticles.length }})</h2>
+    <div class="articles-grid">
+      <div 
+        *ngFor="let article of filteredArticles" 
+        class="article-card"
+        (click)="navigateToArticle(article)">
+        <div class="card-header">
+          <span class="category-badge">{{ article.category }}</span>
+          <span class="read-time">{{ article.readTime }}</span>
+        </div>
+        <h3 class="article-title">{{ article.title }}</h3>
+        <p class="article-summary">{{ article.summary }}</p>
+        <div class="card-footer">
+          <span class="author">By {{ article.author }}</span>
+          <span class="date">{{ article.date }}</span>
+        </div>
+        <div class="tags">
+          <span *ngFor="let tag of article.tags" class="tag">{{ tag }}</span>
+        </div>
+        <div class="external-link">Learn more →</div>
+      </div>
+    </div>
+    
+  
+
+  <!-- Featured Articles -->
+  <div class="featured-section" *ngIf="featuredArticles.length > 0">
+    <h2>Featured Articles</h2>
+    <div class="featured-grid">
+      <div 
+        *ngFor="let article of featuredArticles" 
+        class="featured-card"
+        (click)="navigateToArticle(article)">
+        <div class="card-header">
+          <span class="category-badge">{{ article.category }}</span>
+          <span class="read-time">{{ article.readTime }}</span>
+        </div>
+        <h3 class="article-title">{{ article.title }}</h3>
+        <p class="article-summary">{{ article.summary }}</p>
+        <div class="card-footer">
+          <span class="author">By {{ article.author }}</span>
+          <span class="date">{{ article.date }}</span>
+        </div>
+        <div class="tags">
+          <span *ngFor="let tag of article.tags" class="tag">{{ tag }}</span>
+        </div>
+        <div class="external-link">Click to read more on Wikipedia →</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- All Articles -->
+  <div class="articles-section">
+   
+
+    <!-- No Results Message -->
+    <div *ngIf="filteredArticles.length === 0" class="no-results">
+      <h3>No articles found</h3>
+      <p>Try adjusting your search or filter criteria</p>
+    </div>
+  </div>
+</div>

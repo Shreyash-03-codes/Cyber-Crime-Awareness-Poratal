@@ -1,0 +1,27 @@
+.contact-section {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.contact-section .card {
+  border-radius: 12px;
+}
+
+.contact-section input,
+.contact-section textarea {
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+.contact-section button {
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+
+.contact-section button:hover {
+  background-color: #0a58ca;
+}
+
+.contact-section i {
+  vertical-align: middle;
+}

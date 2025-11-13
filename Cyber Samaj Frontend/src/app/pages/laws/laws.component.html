@@ -1,0 +1,195 @@
+<div class="laws-page">
+  <!-- Header Section -->
+  <section class="page-header">
+    <div class="container">
+      <h1 class="page-title">Cyber Crime Laws & Regulations</h1>
+      <p class="page-subtitle">Comprehensive guide to legal provisions against cyber crimes in India and internationally</p>
+    </div>
+  </section>
+
+  <!-- Search and Filter Section -->
+  <section class="filters-section">
+    <div class="container">
+      <div class="filters-container">
+        <!-- Search Bar -->
+        <div class="search-box">
+          <i class="search-icon">🔍</i>
+          <input 
+            type="text" 
+            placeholder="Search laws by title, description, or tags..." 
+            [(ngModel)]="searchTerm"
+            (input)="onSearchChange()"
+            class="search-input"
+          >
+        </div>
+
+        <!-- Category Filter -->
+        <div class="filter-group">
+          <select 
+            [(ngModel)]="selectedCategory" 
+            (change)="onCategoryChange()"
+            class="category-filter"
+          >
+            <option value="">All Categories</option>
+            <option *ngFor="let category of categories" [value]="category">
+              {{category}}
+            </option>
+          </select>
+        </div>
+
+        <!-- Clear Filters -->
+        <button 
+          *ngIf="searchTerm || selectedCategory" 
+          (click)="clearFilters()" 
+          class="clear-filters-btn"
+        >
+          Clear Filters
+        </button>
+      </div>
+
+      <!-- Results Count -->
+      <div class="results-info">
+        <p>Showing {{filteredLaws.length}} of {{laws.length}} cyber laws</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Laws Grid -->
+  <section class="laws-section">
+    <div class="container">
+      <div *ngIf="filteredLaws.length === 0" class="no-results">
+        <i class="no-results-icon">🔍</i>
+        <h3>No laws found</h3>
+        <p>Try adjusting your search terms or filters</p>
+        <button (click)="clearFilters()" class="reset-btn">Show All Laws</button>
+      </div>
+
+      <div class="laws-grid" *ngIf="filteredLaws.length > 0">
+        <div class="law-card" *ngFor="let law of filteredLaws">
+          <div class="law-header">
+            <span class="law-section">{{law.section}}</span>
+            <span class="jurisdiction-badge" [class]="'jurisdiction-' + law.jurisdiction.toLowerCase().replace(' ', '-')">
+              {{law.jurisdiction}}
+            </span>
+          </div>
+
+          <div class="law-body">
+            <h3 class="law-title">{{law.title}}</h3>
+            <p class="law-description">{{law.description}}</p>
+            
+            <div class="law-meta">
+              <div class="meta-item">
+                <strong>Category:</strong>
+                <span class="category-tag">{{law.category}}</span>
+              </div>
+              <div class="meta-item">
+                <strong>Source:</strong>
+                <span>{{law.source}}</span>
+              </div>
+              <div class="meta-item">
+                <strong>Last Updated:</strong>
+                <span>{{law.lastUpdated}}</span>
+              </div>
+            </div>
+
+            <div class="punishment-info">
+              <h4>Punishment:</h4>
+              <p class="punishment-text">{{law.punishment}}</p>
+            </div>
+
+            <div class="law-tags">
+              <span 
+                *ngFor="let tag of law.tags" 
+                class="tag"
+                [class]="getTagsClass(tag)"
+              >
+                {{tag}}
+              </span>
+            </div>
+          </div>
+
+          <div class="law-footer">
+            <button 
+              class="details-btn" 
+              (click)="openExternalLink(law.legalDetailsLink)"
+              title="View official legal document"
+            >
+              📄 View Legal Details
+            </button>
+            <button 
+              class="learn-more-btn" 
+              (click)="openExternalLink(law.learnMoreLink)"
+              title="Learn more about this law"
+            >
+              📚 Learn More
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Information Section -->
+  <section class="info-section">
+    <div class="container">
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-icon">⚖️</div>
+          <h3>Legal Assistance</h3>
+          <p>If you believe a cyber crime law has been violated, consult with legal experts and report to appropriate authorities.</p>
+          <a href="https://www.cybercrime.gov.in/Webform/Helpline.aspx" target="_blank" class="info-link">
+            Report Cyber Crime →
+          </a>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">🔒</div>
+          <h3>Stay Protected</h3>
+          <p>Understanding these laws helps you protect your digital rights and take appropriate legal action when needed.</p>
+          <a href="https://www.cert-in.org.in/" target="_blank" class="info-link">
+            CERT-In Resources →
+          </a>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">📚</div>
+          <h3>Legal Updates</h3>
+          <p>Cyber laws are constantly evolving. Stay updated with the latest amendments and new regulations.</p>
+          <a href="https://www.meity.gov.in/" target="_blank" class="info-link">
+            MeitY Updates →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Links Section -->
+  <section class="quick-links-section">
+    <div class="container">
+      <h2 class="section-title">Official Resources</h2>
+      <div class="quick-links-grid">
+        <a href="https://www.meity.gov.in/" target="_blank" class="quick-link">
+          <div class="link-icon">🏛️</div>
+          <span>Ministry of Electronics & IT</span>
+        </a>
+        <a href="https://www.cybercrime.gov.in/" target="_blank" class="quick-link">
+          <div class="link-icon">🚨</div>
+          <span>Cyber Crime Reporting Portal</span>
+        </a>
+        <a href="https://www.cert-in.org.in/" target="_blank" class="quick-link">
+          <div class="link-icon">🛡️</div>
+          <span>CERT-In</span>
+        </a>
+        <a href="https://www.indiacode.nic.in/" target="_blank" class="quick-link">
+          <div class="link-icon">📖</div>
+          <span>India Code Portal</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Note -->
+  <section class="footer-note">
+    <div class="container">
+      <p><strong>Disclaimer:</strong> This information is for educational purposes only. For legal advice, please consult a qualified legal professional. External links will open in new tabs.</p>
+    </div>
+  </section>
+</div>

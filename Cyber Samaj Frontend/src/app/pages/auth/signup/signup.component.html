@@ -1,0 +1,67 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h3 class="card-title text-center mb-4">Signup</h3>
+
+          <!-- Manual Signup Form -->
+          <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+            <!-- Name -->
+            <div class="mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input id="name" type="text" class="form-control" formControlName="name">
+              <div *ngIf="signupForm.get('name')?.touched && signupForm.get('name')?.invalid" class="text-danger small">
+                Name is required.
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="username" class="form-label">Email</label>
+              <input id="username" type="email" class="form-control" formControlName="username">
+              <div *ngIf="signupForm.get('username')?.touched && signupForm.get('username')?.invalid" class="text-danger small">
+                Valid email is required.
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input id="password" type="password" class="form-control" formControlName="password">
+              <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.invalid" class="text-danger small">
+                Password must be at least 6 characters.
+              </div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirm Password</label>
+              <input id="confirmPassword" type="password" class="form-control" formControlName="confirmPassword">
+              <div *ngIf="signupForm.get('confirmPassword')?.touched && signupForm.hasError('passwordMismatch')" class="text-danger small">
+                Passwords do not match.
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Signup</button>
+          </form>
+
+          <!-- Social Login Buttons -->
+          <div class="text-center mt-3">
+            <p>Or sign up with</p>
+            <div class="d-flex flex-column flex-md-row gap-3 justify-content-center">
+              <app-sign-in-with-google class="flex-grow-1"></app-sign-in-with-google>
+              <app-sign-in-with-instagram class="flex-grow-1"></app-sign-in-with-instagram>
+            </div>
+          </div>
+
+          <!-- Messages -->
+          <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
+          <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

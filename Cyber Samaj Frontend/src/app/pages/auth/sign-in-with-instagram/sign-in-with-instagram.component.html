@@ -1,0 +1,7 @@
+<button 
+  *ngIf="!user && !accessToken" 
+  class="btn btn-instagram w-100 d-flex align-items-center justify-content-center"
+  (click)="signInWithInstagram()">
+  <i class="bi bi-instagram me-2"></i>
+  Continue with Instagram
+</button>

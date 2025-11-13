@@ -1,0 +1,50 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h3 class="card-title text-center mb-4">Login</h3>
+
+          <!-- Login Form -->
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+            <!-- Username / Email -->
+            <div class="mb-3">
+              <label for="username" class="form-label">Email</label>
+              <input id="username" type="email" class="form-control" formControlName="username">
+              <div *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.invalid" class="text-danger small">
+                Valid email is required.
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input id="password" type="password" class="form-control" formControlName="password">
+              <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="text-danger small">
+                Password must be at least 6 characters.
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+          </form>
+
+<div class="text-center mt-3">
+  <p>Or login with</p>
+  <div class="d-flex flex-column flex-md-row gap-3 justify-content-center">
+    <app-sign-in-with-google class="flex-grow-1"></app-sign-in-with-google>
+    <app-sign-in-with-instagram class="flex-grow-1"></app-sign-in-with-instagram>
+  </div>
+</div>
+
+
+
+          <!-- Messages -->
+          <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
+          <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
